@@ -19,10 +19,17 @@ namespace Calculation
             for(int i =0;i< 100;++i)
             {
                 Thread.Sleep(1000);
+                if(token.IsCancellationRequested)
+                {
+                    Notify("Good buy", MessageType.Info);
+                    return false;
+                }
                 Notify(i.ToString(), MessageType.Info);
             }
 
             return true;
         }
+
+         
     }
 }

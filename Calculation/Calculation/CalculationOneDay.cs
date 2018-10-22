@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
+using System.Threading;
 using System.Threading.Tasks;
 
 namespace Calculation
@@ -9,9 +10,14 @@ namespace Calculation
     public abstract class CalculationOneDay
     {
         protected CalculationLogger _logger;
+        protected CancellationTokenSource caneclTokenSource =
+            new CancellationTokenSource();
+        protected CancellationToken token;
+            
 
         public CalculationOneDay()
         {
+            token = caneclTokenSource.Token;
             _logger = new CalculationLogger();
         }
 
@@ -22,7 +28,7 @@ namespace Calculation
 
         public virtual void Stop()
         {
-
+            caneclTokenSource.Cancel();
         }
 
         public void Notify(string message, MessageType messageType)
@@ -37,6 +43,15 @@ namespace Calculation
                 return _logger;
             }
         }
+
+        public CancellationToken Token
+        {
+            get
+            {
+                return token;
+            }
+        }
+
 
 
     }

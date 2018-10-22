@@ -12,6 +12,9 @@ namespace Calculation
 {
     public partial class Form1 : Form
     {
+        CalculationOneDay incrementalAlgorithm =
+                new IncrementalAlgorithm();
+
         public Form1()
         {
             InitializeComponent();
@@ -19,9 +22,6 @@ namespace Calculation
 
         private void button1_Click(object sender, EventArgs e)
         {
-            CalculationOneDay incrementalAlgorithm =
-                new IncrementalAlgorithm();
-
             incrementalAlgorithm.CalculationLogger.HandleMessage+= new EventHandler(OnHandleMessage);
 
             Task task = new Task(() =>
@@ -48,6 +48,11 @@ namespace Calculation
                     richTextBox1.Text = message + "\n" + richTextBox1.Text;
                 }
             }
+        }
+
+        private void button2_Click(object sender, EventArgs e)
+        {
+            incrementalAlgorithm.Stop();
         }
     }
 }
